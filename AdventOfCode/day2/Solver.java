@@ -1,5 +1,6 @@
 package AdventOfCode.day2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +14,7 @@ class Solver extends BaseSolver {
     }
 
     @Override
-    protected void question(List<String> fileLines) {
+    protected void question1(List<String> fileLines) {
         int safeLevels = 0;
         for (String rawLevelData : fileLines) {
             List<Integer> numbers = Arrays.stream(rawLevelData.split(" "))
@@ -23,10 +24,36 @@ class Solver extends BaseSolver {
             if (isFloorSafe(numbers)) {
                 safeLevels++;
             }
-            System.out.println(rawLevelData + " is " + isFloorSafe(numbers));
 
         }
-        System.out.println("Number of safe floors is: " + safeLevels);
+        System.out.println("[part 1] Number of safe floors is: " + safeLevels);
+    }
+
+    @Override
+    protected void question2(List<String> fileLines) {
+        int safeLevels = 0;
+        for (String rawLevelData : fileLines) {
+            List<Integer> numbers = Arrays.stream(rawLevelData.split(" "))
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+
+            if (isFloorSafe(numbers)) {
+                safeLevels++;
+            } else {
+                int i = 0;
+                while (i < numbers.size()) {
+                    var copy = new ArrayList<>(numbers);
+                    copy.remove(i);
+                    if (isFloorSafe(copy)) {
+                        safeLevels++;
+                        break;
+                    }
+                    i++;
+                }
+            }
+
+        }
+        System.out.println("[part 1] Number of safe floors is: " + safeLevels);
     }
 
     private boolean isFloorSafe(List<Integer> floorData) {
@@ -64,4 +91,5 @@ class Solver extends BaseSolver {
 
         return (previous > 0 != current > 0);
     }
+
 }
