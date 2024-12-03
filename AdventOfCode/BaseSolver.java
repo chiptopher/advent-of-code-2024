@@ -19,7 +19,10 @@ public abstract class BaseSolver {
     public void solve() {
         try {
             var lines = BaseSolver.readFile(this.path);
+            System.out.println("Output for question 1:");
             this.question1(lines);
+            System.out.println("=============================");
+            System.out.println("Output for question 2:");
             this.question2(lines);
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());

@@ -33,11 +33,39 @@ class Solver extends BaseSolver {
 
     @Override
     protected void question2(List<String> fileLines) {
+        boolean pause = false;
+        int sum = 0;
+        for (String line : fileLines) {
+            var multiplicationBlocksMatcher = getMatcherWithDoAndDont().matcher(line);
+            while (multiplicationBlocksMatcher.find()) {
+                var section = multiplicationBlocksMatcher.group();
+                if (section.equals("do()")) {
+                    pause = false;
+                } else if (section.equals("don't()")) {
+                    pause = true;
+                } else {
+                    if (!pause) {
+                        var inputsMatcher = getInputsMatcher().matcher(section);
+                        List<Integer> inputs = new ArrayList<>();
+                        while (inputsMatcher.find()) {
+                            inputs.add(Integer.parseInt(inputsMatcher.group()));
+                        }
+                        sum += inputs.stream().reduce(1, (a, b) -> a * b);
+                    }
+                }
+
+            }
+        }
+        System.out.println(sum);
     }
 
     private Pattern getMatcherForMultiplicationBlocks() {
         String multiplicationSectionMatcher = "mul\\(\\d+,\\d+\\)"; // Escaped parentheses and comma
         return Pattern.compile(multiplicationSectionMatcher);
+    }
+
+    private Pattern getMatcherWithDoAndDont() {
+        return Pattern.compile("(mul\\(\\d+\\,\\d+\\)|don\\'t\\(\\)|do\\(\\))");
     }
 
     private Pattern getInputsMatcher() {
