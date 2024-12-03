@@ -12,18 +12,18 @@ public abstract class BaseSolver {
         this.path = path;
     }
 
-    protected abstract void question1(List<String> fileLines);
+    protected abstract String question1(List<String> fileLines);
 
-    protected abstract void question2(List<String> fileLines);
+    protected abstract String question2(List<String> fileLines);
 
     public void solve() {
         try {
             var lines = BaseSolver.readFile(this.path);
-            System.out.println("Output for question 1:");
-            this.question1(lines);
-            System.out.println("=============================");
-            System.out.println("Output for question 2:");
-            this.question2(lines);
+            System.out.println("=========================================");
+            System.out.println("Output for question 1: " + this.question1(lines));
+            System.out.println("=========================================");
+            System.out.println("Output for question 2: " + this.question2(lines));
+            System.out.println("=========================================");
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
         }

@@ -14,7 +14,7 @@ class Solver extends BaseSolver {
     }
 
     @Override
-    protected void question1(List<String> fileLines) {
+    protected String question1(List<String> fileLines) {
         int sum = 0;
         List<Integer> first = new ArrayList<>();
         List<Integer> second = new ArrayList<>();
@@ -30,11 +30,11 @@ class Solver extends BaseSolver {
             sum += Math.abs(first.get(i) - second.get(i));
         }
 
-        System.out.println(sum);
+        return Integer.toString(sum);
     }
 
     @Override
-    protected void question2(List<String> fileLines) {
+    protected String question2(List<String> fileLines) {
         int sum = 0;
         List<Integer> first = new ArrayList<>();
         List<Integer> second = new ArrayList<>();
@@ -51,7 +51,7 @@ class Solver extends BaseSolver {
             sum += (number * count);
         }
 
-        System.out.println(sum);
+        return Integer.toString(sum);
     }
 
 }

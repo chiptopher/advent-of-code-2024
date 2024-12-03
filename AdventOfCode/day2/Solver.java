@@ -14,7 +14,7 @@ class Solver extends BaseSolver {
     }
 
     @Override
-    protected void question1(List<String> fileLines) {
+    protected String question1(List<String> fileLines) {
         int safeLevels = 0;
         for (String rawLevelData : fileLines) {
             List<Integer> numbers = Arrays.stream(rawLevelData.split(" "))
@@ -26,11 +26,12 @@ class Solver extends BaseSolver {
             }
 
         }
-        System.out.println("[part 1] Number of safe floors is: " + safeLevels);
+
+        return Integer.toString(safeLevels);
     }
 
     @Override
-    protected void question2(List<String> fileLines) {
+    protected String question2(List<String> fileLines) {
         int safeLevels = 0;
         for (String rawLevelData : fileLines) {
             List<Integer> numbers = Arrays.stream(rawLevelData.split(" "))
@@ -53,7 +54,7 @@ class Solver extends BaseSolver {
             }
 
         }
-        System.out.println("[part 1] Number of safe floors is: " + safeLevels);
+        return Integer.toString(safeLevels);
     }
 
     private boolean isFloorSafe(List<Integer> floorData) {

@@ -13,7 +13,7 @@ class Solver extends BaseSolver {
     }
 
     @Override
-    protected void question1(List<String> fileLines) {
+    protected String question1(List<String> fileLines) {
         int sum = 0;
         for (String line : fileLines) {
             var multiplicationBlocksMatcher = getMatcherForMultiplicationBlocks().matcher(line);
@@ -28,11 +28,11 @@ class Solver extends BaseSolver {
                 sum += inputs.stream().reduce(1, (a, b) -> a * b);
             }
         }
-        System.out.println(sum);
+        return Integer.toString(sum);
     }
 
     @Override
-    protected void question2(List<String> fileLines) {
+    protected String question2(List<String> fileLines) {
         boolean pause = false;
         int sum = 0;
         for (String line : fileLines) {
@@ -56,7 +56,7 @@ class Solver extends BaseSolver {
 
             }
         }
-        System.out.println(sum);
+        return Integer.toString(sum);
     }
 
     private Pattern getMatcherForMultiplicationBlocks() {
