@@ -29,9 +29,8 @@ class Solver extends BaseSolver {
         for (int startIndex = 0; startIndex < joined.length(); startIndex++) {
             if (joined.charAt(startIndex) == 'X') {
                 for (int space : cardinals) {
-                    var created = createStringFromStartingPointWithSpace(joined, startIndex, space);
+                    var created = createStringFromStartingPointWithSpace(joined, startIndex, space, lengthOfRow);
                     if (created.equals("XMAS")) {
-                        System.out.println(created);
                         count++;
                     }
                 }
@@ -46,12 +45,26 @@ class Solver extends BaseSolver {
         return "Not done yet";
     }
 
-    private String createStringFromStartingPointWithSpace(String base, int startingIndex, int space) {
-        System.out.println("Starting with " + startingIndex + " with cardinality of " + space);
+    private String createStringFromStartingPointWithSpace(String base, int startingIndex, int space, int lineLength) {
         StringBuilder build = new StringBuilder();
-        for (int i = startingIndex; i >= 0 && i < base.length() && build.length() < 4; i += space) {
+        int i = startingIndex;
+        int previousMode = i % lineLength;
+
+        while (i >= 0 && i < base.length() && build.length() < 4
+                && !leftRightEdgeCase(previousMode, i % lineLength, previousMode)) {
+
             build.append(base.charAt(i));
+            previousMode = i % lineLength;
+            i = i + space;
         }
         return build.toString();
+    }
+
+    private boolean leftRightEdgeCase(int startingMod, int currentMod, int previous) {
+        if (startingMod == currentMod) {
+            return false;
+        }
+
+        return Math.abs(startingMod - currentMod) > 1;
     }
 }
