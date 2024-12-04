@@ -1,6 +1,5 @@
 package AdventOfCode.day4;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import AdventOfCode.BaseSolver;
@@ -14,7 +13,7 @@ class Solver extends BaseSolver {
     @Override
     protected String question1(List<String> fileLines) {
         int count = 0;
-        int lengthOfRow = fileLines.size();
+        int lengthOfRow = fileLines.get(0).length();
         var joined = String.join("", fileLines);
         int[] cardinals = {
                 1,
@@ -31,7 +30,8 @@ class Solver extends BaseSolver {
             if (joined.charAt(startIndex) == 'X') {
                 for (int space : cardinals) {
                     var created = createStringFromStartingPointWithSpace(joined, startIndex, space);
-                    if (created.equals("XMAS") || created.equals("SAMX")) {
+                    if (created.equals("XMAS")) {
+                        System.out.println(created);
                         count++;
                     }
                 }
@@ -47,6 +47,7 @@ class Solver extends BaseSolver {
     }
 
     private String createStringFromStartingPointWithSpace(String base, int startingIndex, int space) {
+        System.out.println("Starting with " + startingIndex + " with cardinality of " + space);
         StringBuilder build = new StringBuilder();
         for (int i = startingIndex; i >= 0 && i < base.length() && build.length() < 4; i += space) {
             build.append(base.charAt(i));
