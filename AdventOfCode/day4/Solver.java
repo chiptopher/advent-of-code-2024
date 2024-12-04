@@ -13,18 +13,30 @@ class Solver extends BaseSolver {
 
     @Override
     protected String question1(List<String> fileLines) {
-        List<Point> startingPoints = new ArrayList<>();
-        for (int y = 0; y < fileLines.size(); y++) {
-            for (int x = 0; x < fileLines.get(y).length(); x++) {
-                if (fileLines.get(y).charAt(x) == 'X') {
-                    startingPoints.add(new Point(x, y, fileLines, 'X'));
+        int count = 0;
+        int lengthOfRow = fileLines.size();
+        var joined = String.join("", fileLines);
+        int[] cardinals = {
+                1,
+                -1,
+                lengthOfRow,
+                lengthOfRow * -1,
+                lengthOfRow + 1,
+                lengthOfRow - 1,
+                -1 * (lengthOfRow + 1),
+                -1 * (lengthOfRow - 1)
+        };
+
+        for (int startIndex = 0; startIndex < joined.length(); startIndex++) {
+            if (joined.charAt(startIndex) == 'X') {
+                for (int space : cardinals) {
+                    var created = createStringFromStartingPointWithSpace(joined, startIndex, space);
+                    if (created.equals("XMAS") || created.equals("SAMX")) {
+                        count++;
+                    }
                 }
             }
         }
-
-        int count = startingPoints.stream()
-                .map(Point::checkForAllDirections)
-                .reduce(0, (a, b) -> a + b);
 
         return Integer.toString(count);
     }
@@ -32,5 +44,13 @@ class Solver extends BaseSolver {
     @Override
     protected String question2(List<String> fileLines) {
         return "Not done yet";
+    }
+
+    private String createStringFromStartingPointWithSpace(String base, int startingIndex, int space) {
+        StringBuilder build = new StringBuilder();
+        for (int i = startingIndex; i >= 0 && i < base.length() && build.length() < 4; i += space) {
+            build.append(base.charAt(i));
+        }
+        return build.toString();
     }
 }
